@@ -1,13 +1,11 @@
 package playground.simple;
 
-import java.time.LocalDate;
-import java.time.Period;
-
 public class Main {
     public static void main(String[] args) {
-        final LocalDate date = LocalDate.of(2016, 1, 1);
-        final int days = Period.between(date, date).getDays();
-        System.out.println(days);
+        final double x = 81;
+        final double n = 4;
+        final double nthRoot = Math.pow(Math.E, Math.log(x) / n);
+        System.out.println(nthRoot);
     }
 
 }
