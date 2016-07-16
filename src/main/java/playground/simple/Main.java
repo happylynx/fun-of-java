@@ -1,18 +1,50 @@
 package playground.simple;
 
-import java.util.stream.IntStream;
-
 public class Main {
     public static void main(String[] args) {
-        IntStream.rangeClosed(5, 12)
-                .map(Main::inc)
-                .forEach(System.out::println);
+        final B<Integer> b = new AbstractImplementation().get();
+        System.out.println();
+    }
+}
+
+class InterfaceImpl implements Interface {
+
+    @SuppressWarnings("unchecked")
+    public AAndB<Integer> get() {
+        //  ^----- Unchecked overriding: return type requires unchecked conversion. Found 'org.example.AAndB<java.lang.integer>', required 'T'.
+        final AAndB<Integer> aAndB = new AAndB<Integer>();
+        return aAndB;
+    }
+}
+
+class AbstractImplementation implements Interface {
+
+     @Override
+     public <T extends B<Integer> & A> T get() {
+         T both = (T) new AAndB();
+         return both;
+     }
+ }
+
+interface Interface {
+    <T extends  B<Integer> & A> T get();
+}
+
+class AAndB<T> implements A, B<T> {
+
+    public void a() {
+
     }
 
-    private static int inc(int i) {
-        if (i > 10) {
-            throw new RuntimeException("greater than 10");
-        }
-        return i + 1;
+    public void b(T t) {
+
     }
+}
+
+interface A {
+    void a();
+}
+
+interface B<T> {
+    void b(T t);
 }
