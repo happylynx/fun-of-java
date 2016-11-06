@@ -1,14 +1,15 @@
 package playground.simple;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.IntStream;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        final Matcher matcher = Pattern.compile("^(\\w{2})(_(\\w{2}))?$").matcher("en");
-        matcher.find();
-        IntStream.rangeClosed(1, 3)
-                .forEach(index -> System.out.println(index + " " + matcher.group(index)));
+        final ArrayList<StackTraceElement> stackFrame = new ArrayList<>();
+        for (int i : new int[] {1, 2}) {
+            final StackTraceElement frame = Thread.currentThread().getStackTrace()[0];
+            stackFrame.add(frame);
+        }
+        final boolean equals = stackFrame.get(0).equals(stackFrame.get(1));
+        System.out.println(equals);
     }
 }
