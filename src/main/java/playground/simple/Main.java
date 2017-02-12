@@ -1,11 +1,14 @@
 package playground.simple;
 
-import java.util.Collections;
-
 public class Main {
     public static void main(String[] args) {
-        Collections.singletonList(new A()).toArray({});
+        System.out.println(new A());
     }
 
-    private static class A {}
+    private static class A {
+        @Override
+        public String toString(A this) {
+            return "A{}";
+        }
+    }
 }
