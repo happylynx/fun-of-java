@@ -2,13 +2,22 @@ package playground.simple;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(new A());
+        new Car().steer(new SteeringWheel());
     }
 
-    private static class A {
-        @Override
-        public String toString(A this) {
-            return "A{}";
-        }
+}
+
+interface Vehicle<T extends SteeringDevice<? extends Vehicle<T>>> {
+    default void steer(T steeringDevice) {}
+}
+
+interface SteeringDevice<U extends Vehicle<? extends SteeringDevice<U>>> {
+    default void turn() {
+        U vehicle = null;
+        ((Vehicle) vehicle).steer(this);
     }
 }
+
+class Car implements Vehicle<SteeringWheel> {}
+
+class SteeringWheel implements SteeringDevice<Car> {}
