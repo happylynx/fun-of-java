@@ -7,17 +7,17 @@ public class Main {
 
 }
 
-interface Vehicle<T extends SteeringDevice<? extends Vehicle<T>>> {
+interface Vehicle<T extends SteeringDevice<U, T>, U extends Vehicle<T, U>> {
     default void steer(T steeringDevice) {}
 }
 
-interface SteeringDevice<U extends Vehicle<? extends SteeringDevice<U>>> {
+interface SteeringDevice<T extends Vehicle<U, T>, U extends SteeringDevice<T, U>> {
     default void turn() {
-        U vehicle = null;
-        ((Vehicle) vehicle).steer(this);
+        T vehicle = null;
+        (vehicle).steer((U) this);
     }
 }
 
-class Car implements Vehicle<SteeringWheel> {}
+class Car implements Vehicle<SteeringWheel, Car> {}
 
-class SteeringWheel implements SteeringDevice<Car> {}
+class SteeringWheel implements SteeringDevice<Car, SteeringWheel> {}
