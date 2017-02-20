@@ -1,17 +1,18 @@
 package playground.simple;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
-        A a = (A) getNull(); // fails during compilation
-        System.out.println("ok");
+        final A a = new A();
+        final Type[] typeArguments = ((ParameterizedType) a.getClass().getGenericInterfaces()[0])
+                .getActualTypeArguments();
+        System.out.println(Arrays.toString(typeArguments));
     }
-
-    public static B getNull() {
-        return null;
-    }
-
 }
 
-class A {}
+class A implements B<String> {}
 
-class B {}
+interface B<T> {}
